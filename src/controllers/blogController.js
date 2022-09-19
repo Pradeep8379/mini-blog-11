@@ -78,7 +78,7 @@ const updateBlog = async function (req, res) {
             arrayUpdates["tags"] = updates.tags;
         if (updates["subcategory"])
             arrayUpdates["subcategory"] = updates.subcategory;
-        let check = await blogModel.findById({ blogId });
+        let check = await blogModel.findById({_id:blogId });
         if(check.isDeleted)  return res.status(404).send({ status: false, msg: "blog does not exist" })
         let updatedBlog = await blogModel.findByIdAndUpdate({ _id:blogId }, { $set: stringUpdates, $push: arrayUpdates }, { new: true })
         return res.status(200).send({ status: true, data: updatedBlog })
